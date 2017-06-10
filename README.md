@@ -16,12 +16,11 @@ java基础WEB项目JSP+SERVLET+EASYUI+ECHART，使用PYTHON爬取网页数据，
 ![image](https://github.com/515791278/xiaoshouxitong_java/blob/master/%E6%80%BB%E4%BD%93.png)
 
 最后生成的购物页面，只要点击推荐商品就会出现最合适的商品
-![image]（https://github.com/515791278/xiaoshouxitong_java/blob/master/%E9%A1%B5%E9%9D%A2.png)
-
+![image](https://github.com/515791278/xiaoshouxitong_java/blob/master/%E9%A1%B5%E9%9D%A2.png)
 这个项目时间过有点长，后台，老板的页面运行不起来，但主要的核心是推荐页面！！！
+制作的图表
 
-
-
+![image](https://github.com/515791278/xiaoshouxitong_java/blob/master/%E7%94%9F%E6%88%90%E5%9B%BE%E6%A0%87.png)
 
 
 
