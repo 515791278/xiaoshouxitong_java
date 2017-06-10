@@ -1,5 +1,9 @@
 # xiaoshouxitong_java
-java基础WEB项目JSP+SERVLET+EASYUI+ECHART，使用PYTHON爬取网页数据，完成协同过滤，FP-GROWTH算法
+这应该是我真正意义上的第一个WEB项目，可惜只是想将以前的只是学习才制作，没有付出很多精力，但总体还是比较满意的，请大家指导！
+
+
+
+java基础WEB项目JSP+SERVLET+ajax+EASYUI+ECHART，使用PYTHON爬取网页数据，完成协同过滤，FP-GROWTH算法
 
 整体系统的架构和布局，网上学习后找到目标：整个项目用MVC框架制作，加入了数据层
 ![image](https://github.com/515791278/xiaoshouxitong_java/blob/master/272011015588144.png)
