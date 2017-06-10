@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Insert title here</title>
+<script type="text/javascript" src="js/json2.js"></script>
+<script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://www.w3cschool.cc/try/jeasyui/themes/default/easyui.css">
+	<link rel="stylesheet" type="text/css" href="http://www.w3cschool.cc/try/jeasyui/themes/icon.css">  
+
+	<script type="text/javascript" src="http://www.w3cschool.cc/try/jeasyui/jquery.easyui.min.js"></script>
+<script type="text/javascript"> 
+$(document).ready(function(){
+  $("#flip").click(function(){
+    $("#panel").slideDown("slow");
+$.post("show",function(data){
+	var jsona=JSON.parse(data);
+	  
+		var pic ="pic/"+jsona[0].picture;
+		$("#img1").attr("src",pic);
+		$("#a1").attr("href",jsona[0].url);
+		$("#p1").text(jsona[0].name);
+		$("#p2").text("价格 :"+jsona[0].outprice);
+		
+		var pic1 ="pic/"+jsona[1].picture;
+		$("#p3").text(jsona[1].name);
+		$("#p4").text("价格:"+jsona[1].outprice);
+		$("#img2").attr("src",pic1);
+		$("#a2").attr("href",jsona[1].url);
+		var pic2 ="pic/"+jsona[2].picture;
+		$("#p0").text(jsona[2].name);
+		$("#p00").text("价格:"+jsona[2].outprice);
+		$("#img0").attr("src",pic2);
+	
+	
+});
+	  
+  })
+  
+ 
+})
+
+</script>
+ 
+<style type="text/css"> 
+.products{
+			list-style:none;
+			margin-right:300px;
+			padding:0px;
+			height:100%;
+		}
+		.products li{
+			display:inline;
+			float:left;
+			margin:10px;
+		}
+		.item{
+			display:block;
+			text-decoration:none;
+		}
+		.item img{
+			border:1px solid #333;
+		}
+		.item p{
+			margin:0;
+			font-weight:bold;
+			text-align:center;
+			color:#c3c3c3;
+		}
+		.cart{
+			position:fixed;
+			right:0;
+			top:0;
+			width:300px;
+			height:100%;
+			background:#ccc;
+			padding:0px 10px;
+		}
+		h1{
+			text-align:center;
+			color:#555;
+		}
+		h2{
+			position:absolute;
+			font-size:16px;
+			left:10px;
+			bottom:20px;
+			color:#555;
+		}
+		.total{
+			margin:0;
+			text-align:right;
+			padding-right:20px;
+		}
+#panel,#flip
+{
+	padding:5px;
+	text-align:center;
+	background-color:#e5eecc;
+	border:solid 1px #c3c3c3;
+}
+#panel
+{
+	padding:50px;
+	display:none;
+}
+</style>
+<script>
+		var data = {"total":0,"rows":[]};
+		var totalCost = 0;
+		
+		$(function(){
+			$('#cartcontent').datagrid({
+				singleSelect:true
+			});
+			$('.item').draggable({
+				revert:true,
+				proxy:'clone',
+				onStartDrag:function(){
+					$(this).draggable('options').cursor = 'not-allowed';
+					$(this).draggable('proxy').css('z-index',10);
+				},
+				onStopDrag:function(){
+					$(this).draggable('options').cursor='move';
+				}
+			});
+			$('.cart').droppable({
+				onDragEnter:function(e,source){
+					$(source).draggable('options').cursor='auto';
+				},
+				onDragLeave:function(e,source){
+					$(source).draggable('options').cursor='not-allowed';
+				},
+				onDrop:function(e,source){
+					var name = $(source).find('p:eq(0)').html();
+					var price = $(source).find('p:eq(1)').html();
+					addProduct(name, parseFloat(price.split(':')[1]));
+				}
+			});
+		});
+		
+		function addProduct(name,price){
+			function add(){
+				for(var i=0; i<data.total; i++){
+					var row = data.rows[i];
+					if (row.name == name){
+						row.quantity += 1;
+						return;
+					}
+				}
+				data.total += 1;
+				data.rows.push({
+					name:name,
+					quantity:1,
+					price:price
+				});
+			}
+			add();
+			totalCost += price;
+			$('#cartcontent').datagrid('loadData', data);
+			$('div.cart .total').html('总价：'+totalCost);
+		}
+	</script>
+</head>
+<body>
+ 
+<div id="flip" style="height:40px;font-size:33px;">推荐商品</div>
+<div id="panel" style="margin:0;padding:0;height:400px;background:#fafafa;">  
+<ul class="products">
+		<li>
+			<div ><a href="#" class="item" id ="a1">
+			<p >根据您购买过的 ： </p>
+			<img id="img0" style="height:100px;width=100px;" src=""/>
+			<div>
+					<p id ="p0"> </p>
+					<p id="p00"> </p>
+				</div></div>
+		</li>
+		<li>
+				<img id="img1" style="height:300px;width=300px;" src=""/>
+				<div>
+					<p id ="p1"> </p>
+					<p id="p2"> </p>
+				</div>
+			</a>
+		</li>
+		<li>
+			<a href="#" class="item" id ="a2" >
+				<img id="img2" style="height:300px;width=300px;" src=""/>
+				<div>
+					<p id ="p3"> </p>
+					<p id ="p4"> </p>
+				</div>
+			</a>
+		</li>
+		<!-- other products -->
+	</ul>
+
+	<div class="cart">
+		<h1>购物车</h1>
+		<div style="background:#fff">
+		<table id="cartcontent" fitColumns="true" style="width:300px;height:auto;">
+			<thead>
+				<tr>
+					<th field="name" width=140>名字</th>
+					<th field="quantity" width=60 align="right">数量</th>
+					<th field="price" width=60 align="right">价格</th>
+				</tr>
+			</thead>
+		</table>
+		</div>
+		<p class="total">Total: $0</p>
+		<h2>亲 ，添加您需要的商品吧</h2>
+	</div>
+</div>
+</body>
+</html>
